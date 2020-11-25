@@ -6,7 +6,8 @@ const BLOG_NAME = "yangyjxm-nav"; // 个人网站名字
 
 const BLOG_URL = "https://blog.esunr.xyz"; // 个人网站链接（请填写完整链接）
 
-const GITHUB = "https://github.com/yangyjxm"; // 右上角 Github 图标链接，留空不显示
+// const GITHUB = "https://github.com/yangyjxm"; // 右上角 Github 图标链接，留空不显示
+const GITHUB = ""; // 右上角 Github 图标链接，留空不显示
 
 const BACKGROUND_IMG_URL = "https://www.esunr.xyz:8080/api/utils/bingPic"; // 背景图片url，留空默认为必应每日图片
 
@@ -46,7 +47,7 @@ const SLOGAN = [
 const FOOTER_INFO = true; // 是否显示抽屉右下角的文字信息
 
 const SORT_DATA = [
-  { sortId: 1, title: "海蓝" },
+  { sortId: 1, title: "区域创新团队" },
   // { sortId: 2, title: "智慧政务" },
   // { sortId: 3, title: "后端开发" },
   // { sortId: 3, title: "前端开发" }
@@ -76,7 +77,7 @@ const PLAYGROUND_DATA = [
     subtitle: "先找羊添加体验权限后使用微信扫描二维码",
     url: "",
     icon: "http://img.cdn.esunr.xyz/Flappy_Bird_icon.png",
-    qrCodeUrl: "http://img.cdn.esunr.xyz/Flappy_Bird_icon.png",
+    qrCodeUrl: "../assets/order-miniprogram.png",
   },
   {
     pageId: 8,
@@ -84,7 +85,7 @@ const PLAYGROUND_DATA = [
     title: "蓝湖",
     subtitle: "高效的产品设计协作平台",
     url: "https://lanhuapp.com/web/#/item?tid=169c25e5-976f-4637-a236-239316711a17&fid=all",
-    icon: "http://img.cdn.esunr.xyz/video.png",
+    icon: "https://lhcdn.lanhuapp.com/web/static/favicon.ico",
   },
   {
     pageId: 9,
@@ -92,7 +93,7 @@ const PLAYGROUND_DATA = [
     title: "YApi",
     subtitle: "高效、易用、功能强大的 api 管理平台",
     url: "http://106.75.175.39:3001/login",
-    icon: "http://img.cdn.esunr.xyz/%E9%92%B1%E8%A2%8B.png",
+    icon: "http://106.75.175.39:3001/image/favicon.png",
   },
   // {
   //   pageId: 10,
