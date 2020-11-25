@@ -13,6 +13,21 @@
       class="github mdi mdi-github-circle"
       :href="$config.GITHUB"
     ></a>
+    <!-- 搜索栏 -->
+    <!-- <div class="search-bar" v-show="!centerShow">
+      <input
+        v-model="keyword"
+        type="text"
+        autocomplete="off"
+        name="wd"
+        data-code="sogou"
+        data-url="https://www.sogou.com/?hdq=AQ7CZ"
+        data-action="https://www.sogou.com/sie?hdq=AQ7CZ&amp;query=@&amp;ie=utf8#enc"
+        maxlength="255"
+        id="engineKeyWord"
+        @keyup.enter="search"
+      />
+    </div> -->
 
     <!-- 中间LOGO部分 -->
     <div
@@ -20,7 +35,17 @@
       :class="[{ wrapper_blur: centerShow }, 'wrapper', 'bg-blur']"
     >
       <div :class="['img_shadow', { img_shadow_show: imgLoded }]"></div>
-      <div class="inner" style="cursor: pointer" @click="goToBlog">
+      <div class="inner" style="cursor: pointer">
+        <div :class="['search', { search_bottom: flag }]">
+          <input
+            v-model="keyword"
+            placeholder="回车搜索"
+            type="text"
+            autocomplete="off"
+            maxlength="255"
+            @keyup.enter="search"
+          />
+        </div>
         <img
           :class="['R_logo', { R_logo_top: flag }]"
           src="../assets/sheep.svg"
@@ -95,21 +120,27 @@ export default {
       i: 0,
       centerShow: false, // 导航抽屉显示状态
       imgLoded: false, // 背景图片加载状态
-      imgUrl: ""
+      imgUrl: "",
+      keyword: "", // 搜索关键词
     };
   },
   components: {
-    center
+    center,
   },
   computed: {
     recordNumber() {
       return this.$config.RECORD_NUMBER;
-    }
+    },
   },
   methods: {
-    goToBlog() {
-      window.location.href = this.$config.BLOG_URL;
+    // 百度搜索
+    search() {
+      // window.open("https://www.baidu.com/s?wd=" + this.keyword);
+      window.open("https://cn.bing.com/search?q=" + this.keyword);
     },
+    // goToBlog() {
+    //   window.location.href = this.$config.BLOG_URL;
+    // },
     _jieliu(callback, delay) {
       let currentTime = new Date();
       if (currentTime - this.startTime > delay) {
@@ -156,7 +187,7 @@ export default {
     },
     stopPropagation(e) {
       e.stopPropagation();
-    }
+    },
   },
   mounted() {
     setTimeout(() => {
@@ -171,7 +202,7 @@ export default {
     };
     this.slogan = this.$config.SLOGAN;
     this.i = randomNum(0, this.slogan.length - 1);
-  }
+  },
 };
 </script>
 
@@ -193,6 +224,11 @@ export default {
     z-index: 1;
     cursor: pointer;
   }
+  // .search-bar {
+  //   position: fixed;
+  //   top: 0;
+  //   z-index: 99999;
+  // }
   .wrapper {
     background-size: cover !important;
     overflow: hidden;
@@ -213,7 +249,32 @@ export default {
         top: 0;
       }
       .R_logo_top {
-        top: -3.2rem;
+        top: -5.5rem;
+      }
+      .search {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        transition: all 1s;
+        top: 3.5rem;
+        input {
+          color: #333;
+          border: 1px solid #333;
+          border-radius: 8px;
+          height: 16px;
+          padding: 12px 16px;
+          font-size: 16px;
+          width: 380px;
+          &::-webkit-input-placeholder {
+            /* WebKit browsers */
+            color: #ccc;
+            text-align: center;
+          }
+        }
+      }
+      .search_bottom {
+        opacity: 1;
+        top: 0rem;
       }
       .hello {
         color: #ffffff;
@@ -316,6 +377,12 @@ export default {
 
 @media screen and (max-width: 900px) {
   #home {
+    .search {
+      display: none;
+    }
+    .R_logo_top {
+      top: -3rem !important;
+    }
     .center_wrapper {
       .center_inner {
         width: 100%;

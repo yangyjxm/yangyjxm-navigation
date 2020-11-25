@@ -90,7 +90,7 @@ const SLOGAN = [
 const FOOTER_INFO = true; // 是否显示抽屉右下角的文字信息
 ```
 
-另外在编译前，你需要将 `/src/assets/logo.svg` 替换为你的网站LOGO，注意格式必须为 `svg` 文件，同时将 `/oublic/favicon.ico` 替换为你网站的 favicon。
+另外在编译前，你需要将 `/src/assets/logo.svg` 替换为你的网站LOGO，注意格式必须为 `svg` 文件，同时将 `/public/favicon.ico` 替换为你网站的 favicon。
 
 ### 2. 添加服务器支持（可选）
 如果想要使用后台服务器来加加载和管理数据，请将 `SERVE` 设置为 `true` 并将 `HOST` 填写为你的服务器接口地址，这样前台页面就会使用Ajax来向你添加的服务器地址来请求数据。同时你需要按照 [API.md](./API.md) 规范来编写后台API接口，以及按照 [DataBase.md](./DataBase.md) 规范来创建数据库。
@@ -107,16 +107,3 @@ $ npm run build
 生成的文件将存放在 `/dist` 目录下，Enjoy!
 
 ## Log | 更新日志
-
-2020.06.20:
-
-- 修复：移除 Store 层的残余代码
-
-2020.03.29:
-
-- 优化：移除了 yarn 安装方式
-- 优化：移除了 Vuex
-- 修复：替换了获取必应每日图片的 api
-- 新增：支持添加个人网站备案号
-- 新增：集成 Better-Scroll，使抽屉页面可以上下滑动
-- 变更：抽屉打开后，取消了下滑关闭抽屉的操作手势（因为会与抽屉的滑动操作产生冲突）
