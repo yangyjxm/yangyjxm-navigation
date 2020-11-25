@@ -5,7 +5,7 @@
         <div
           :class="[
             'nav_item',
-            { active: sortData[sortIndex].sortId == item.sortId }
+            { active: sortData[sortIndex].sortId == item.sortId },
           ]"
           v-for="(item, index) in sortData"
           :key="item.sortId"
@@ -20,8 +20,13 @@
     </div>
     <div class="scroll-wrapper main">
       <transition-group tag="div" class="row scroll-content" name="list">
-        <div class="col page_item" v-for="item in pagesData" :key="item.pageId">
-          <a :href="item.url" class="page" :title="item.title">
+        <div
+          class="col page_item"
+          :class="item.qrCodeUrl ? 'hover' : ''"
+          v-for="item in pagesData"
+          :key="item.pageId"
+        >
+          <a :href="item.url" class="page" :title="item.title" target="_blank">
             <div class="left">
               <div class="title">{{ item.title }}</div>
               <div class="subtitle">{{ item.subtitle }}</div>
@@ -41,7 +46,7 @@
     </div>
     <div class="footer" v-if="$config.FOOTER_INFO">
       <i class="mdi mdi-fountain-pen-tip"></i> Designed By
-      <a href="https://github.com/EsunR/Blog-Index">EsunR</a>
+      <a href="https://github.com/yangyjxm">yangyjxm</a>
     </div>
   </div>
 </template>
@@ -51,37 +56,38 @@ import BScroll from "better-scroll";
 export default {
   data() {
     return {
-      sortData: [],
+      sortData: this.$config.SORT_DATA,
       sortIndex: 0,
-      pagesData: [],
-      scroller: null
+      pagesData: this.$config.PLAYGROUND_DATA,
+      scroller: null,
     };
   },
   computed: {
     parentCenterShow() {
       // 与父元素耦合
       return this.$parent.centerShow;
-    }
+    },
   },
   watch: {
     parentCenterShow(val) {
       if (val) {
         this.scrollerResize();
       }
-    }
+    },
   },
   methods: {
+    // 获取Tab内的书签列表
     getPages() {
       return new Promise((resolve, reject) => {
         let sortId = this.sortData[this.sortIndex].sortId;
         if (this.$config.SERVE) {
           this.axios
             .get("/getPages?sortId=" + sortId)
-            .then(res => {
+            .then((res) => {
               this.pagesData = res.data.data;
               resolve();
             })
-            .catch(err => {
+            .catch((err) => {
               console.log(err);
               reject(err);
             });
@@ -97,12 +103,13 @@ export default {
         }
       });
     },
+    // 获取Tab列表
     getSort() {
       return new Promise((resolve, reject) => {
         if (this.$config.SERVE) {
           this.axios
             .get("/getSort")
-            .then(res => {
+            .then((res) => {
               if (res.data.code == 1) {
                 this.sortData = res.data.data;
                 resolve();
@@ -110,7 +117,7 @@ export default {
                 reject();
               }
             })
-            .catch(err => {
+            .catch((err) => {
               console.log(err);
               reject(err);
             });
@@ -120,10 +127,12 @@ export default {
         }
       });
     },
+    // 切换Tab
     changeSortIndex(index) {
       this.sortIndex = index;
-      this.getPages();
+      // this.getPages();
     },
+    // 关闭中央弹窗
     handleClose() {
       this.$emit("hide");
     },
@@ -156,22 +165,22 @@ export default {
       } else {
         let wrapper = document.querySelector(".scroll-wrapper");
         this.scroller = new BScroll(wrapper, {
-          click: true
+          click: true,
         });
       }
-    }
+    },
   },
   mounted() {
-    this.getSort()
-      .then(() => {
-        return this.getPages();
-      })
-      .then(() => {
-        // 数据已获取完成 Better Scroll 进行初始化
-        this.scrollerResize();
-      });
+    // this.getSort()
+    //   .then(() => {
+    //     return this.getPages();
+    //   })
+    //   .then(() => {
+    //     // 数据已获取完成 Better Scroll 进行初始化
+    //     this.scrollerResize();
+    //   });
     window.addEventListener("resize", this.scrollerResize);
-  }
+  },
 };
 </script>
 
@@ -218,13 +227,29 @@ export default {
     }
   }
   .scroll-wrapper.main {
+    display: flex;
+    flex-grow: 1;
     height: 300px;
     overflow: hidden;
     margin: 0 -0.5rem;
+    // .hover {
+    //   &:hover {
+    //     &::after {
+    //       content: '';
+    //       display: block;
+    //       width: 100px;
+    //       height: 100px;
+    //       background-color: red;
+    //       background-repeat: no-repeat;
+    //       background-image: url('https://mp.weixin.qq.com/wxopen/basicprofile?action=get_qrcode&type=1&openid=o5SwK41cL9JtP5mTSOHfkH3IDhIA&use_path=1&path=pages%2Flogin%2Findex&random=0.19575173044243765&token=1650609639&lang=zh_CN');
+    //     }
+    //   }
+    // }
     .scroll-content {
       margin: 0;
+      align-content: flex-start;
       .page_item {
-        height: 120px;
+        height: 150px;
         .page {
           background-color: #fff;
           padding: 1rem;
@@ -261,6 +286,7 @@ export default {
           }
           .right {
             width: 20%;
+            // min-width: 68px;
             img {
               width: 100%;
               height: 100%;

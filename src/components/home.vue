@@ -23,13 +23,13 @@
       <div class="inner" style="cursor: pointer" @click="goToBlog">
         <img
           :class="['R_logo', { R_logo_top: flag }]"
-          src="../assets/logo.svg"
+          src="../assets/sheep.svg"
         />
         <div :class="['hello', { hello_bottom: flag }]">
           <div>{{ slogan[i] }}</div>
-          <div class="hello_bottom_text">
+          <!-- <div class="hello_bottom_text">
             点击以访问 {{ $config.BLOG_NAME }}
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -46,7 +46,8 @@
           <i v-if="centerShow" class="mdi-chevron-down mdi"></i>
         </transition>
       </div>
-      <div class="bottom-info">Slide UP</div>
+      <!-- <div class="bottom-info">Slide UP</div> -->
+      <div class="bottom-info">向上滚动</div>
     </div>
 
     <!-- 备案号 -->
